@@ -1,6 +1,6 @@
-920360b104451befb33059fe64683058 *DESCRIPTION
+fc130ba19e6e44b9be8adb5a5b148d0a *DESCRIPTION
 b70449a986a3e91c16bd1b7f1c3c6d64 *NAMESPACE
-35191f1c48ea0c99ea9d1bd072e0e7ce *R/bmhyb.r
+0399c4c5d4a03269fab66cc2dc65fa5e *R/bmhyb.r
 35f42e470386bdf1e3ae3fc5b1fad447 *README.md
 32e85607c254f929dbff306c1fd25e54 *data/cichlid.RData
 76ecb29cda995aafb2b414761da7a877 *data/nicotiana.RData
@@ -38,4 +38,4 @@ afff73aeb5d76bc884d7ae793636f089 *man/SimulateTipData.Rd
 10ea71f108ea18c1a55ad64a67f3dbbf *man/cichlid.Rd
 c7047927644bab46f99d1b49196576f5 *man/nicotiana.Rd
 44c39cc162a23a5cce2a47f11e0624c0 *tests/testthat.R
-680ebd8bd80bfb83eeaeec4462a481f3 *tests/testthat/test_condition.R
+73c59387693aa02d5eb10489441a8e06 *tests/testthat/test_condition.R

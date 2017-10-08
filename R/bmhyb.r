@@ -715,7 +715,24 @@ GetVModified <- function(x, phy, flow, actual.params, measurement.error=NULL) {
 		#covariance managed, now to manage the variance
 		V.modified[recipient.index, recipient.index] <- (V.original[recipient.index, recipient.index] -  sigma.sq*flow$time.from.root.recipient[flow.index])+ (gamma^2 + (1- gamma)^2) * (flow$time.from.root.recipient[flow.index])*sigma.sq +2*gamma*(1-gamma)*V.original[recipient.index, donor.index]  + vh
         #this is variance for the hybrid. See math derivation at https://github.com/bomeara/bmhyb/issues/1
-	}
+    if(dim(flow)[1]>1){
+      flow.1.index<-flow.index
+      recipient.1.index <- which(rownames(V.modified) == flow$recipient[flow.1.index])
+      donor.1.index<-donor.index
+      for (flow.2.index in sequence(dim(flow)[1])) {
+        recipient.2.index<-which(rownames(V.modified)==flow$recipient[flow.2.index])
+        donor.2.index<-which(rownames(V.modified)==flow$donor[flow.2.index])
+        # case 1: (same donor) flow came in "before" speciation
+        if(flow.1.index!=flow.2.index && flow$donor[flow.1.index]==flow$donor[flow.2.index] && V.original[recipient.1.index,recipient.2.index]> max(flow$time.from.root.recipient[flow.1.index],flow$time.from.root.recipient[flow.2.index] ) ){
+           V.modified[recipient.1.index, recipient.2.index]<-(V.original[recipient.1.index,recipient.2.index] - sigma.sq*flow$time.from.root.recipient[flow.1.index]) + (1-gamma)^2*sigma.sq*flow$time.from.root.recipient[flow.1.index] + gamma^2*sigma.sq*flow$time.from.root.recipient[flow.2.index] + gamma*(1-gamma)*sigma.sq*(V.original[recipient.1.index,donor.index]+V.original[recipient.2.index,donor.index])
+           }#end case 1
+        # case 2: (same donor) flow came in "after" speciation
+        if(flow.1.index!=flow.2.index && flow$donor[flow.1.index]==flow$donor[flow.2.index] && V.original[recipient.1.index,recipient.2.index] < min(flow$time.from.root.recipient[flow.1.index], flow$time.from.root.recipient[flow.2.index]) ){
+          V.modified[recipient.1.index, recipient.2.index]<- (1-gamma)^2*sigma.sq*flow$time.from.root.recipient[flow.1.index] + gamma^2*sigma.sq*flow$time.from.root.recipient[flow.2.index]+gamma*(1-gamma)*sigma.sq*(V.original[recipient.1.index,donor.index]+V.original[recipient.2.index,donor.index])
+          }#end case 2
+        }#end for flow.index.2
+      }#end if(dim(flow)[1]>1)
+  }
   if(is.null(measurement.error)) {
 	   diag(V.modified) <- diag(V.modified)+SE^2
   } else {

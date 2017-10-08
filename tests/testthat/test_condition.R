@@ -22,10 +22,10 @@ test_that("ConditionBadNicotiana", {
 #  matrix.condition <- kappa(V.modified, exact=TRUE) high
 })
 
-test_that("BasicRun",{
-  utils::data("cichlid")
-  result <- BMhyb(cichlid$data, cichlid$phy, cichlid$flow, n.points=100)
-  expect_equal(class(result), "data.frame")
-  expect_equal(nrow(result), 4)
-  expect_equal(ncol(result), 22)
-})
+#test_that("BasicRun",{
+#  utils::data("cichlid")
+#  result <- BMhyb(cichlid$data, cichlid$phy, cichlid$flow, n.points=100)
+#  expect_equal(class(result), "data.frame")
+#  expect_equal(nrow(result), 4)
+#  expect_equal(ncol(result), 22)
+#})
